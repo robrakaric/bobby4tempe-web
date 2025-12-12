@@ -7,6 +7,7 @@ These are all code snippets for Carrd where some custom code was needed to imple
 Implements Google Translate on the page. It is invoked with a JS function call:
 
 ```javascript
+// Translates to Español
 translatePage('es')
 ```
 
