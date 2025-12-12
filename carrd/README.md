@@ -15,10 +15,7 @@ translatePage('es')
 
 Adds JSON-LD object to the site metadata in order to steer search engines.
 
-## styling-platform-items
+## styles
 
-Arranges all the platform items using flexbox layout.
-
-## styling-letter-to-editor
-
-Styles letter to editor in the Media section.
+- Arrange all the platform items using flexbox layout.
+- Style letter to editor in the Media section for better readability and conformance to site theme.
