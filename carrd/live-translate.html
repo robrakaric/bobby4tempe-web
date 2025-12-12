@@ -1,30 +1,50 @@
-<div id="google_translate_container"></div>
+<div id="google_translate_container" style="display:none; min-width:150px;"></div>
 
 <script type="text/javascript">
+  // Initialize Google Translate widget
   function googleTranslateElementInit() {
-    new google.translate.TranslateElement(
-      {
-        pageLanguage: "en",
-        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-      },
-      "google_translate_container"
-    );
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+    }, 'google_translate_container');
   }
 
+  // Load Google Translate script dynamically
   function loadGoogleTranslateScript(callback) {
-    if (window.google?.translate) {
+    if (window.google && window.google.translate) {
       callback();
-      return;
+      return; // already loaded
     }
 
-    const script = document.createElement("script");
-    script.src =
-      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    script.onload = callback;
-    document.body.appendChild(script);
+    var gtScript = document.createElement('script');
+    gtScript.type = 'text/javascript';
+    gtScript.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    gtScript.onload = callback;
+    document.body.appendChild(gtScript);
   }
 
-  function translatePage() {
-    loadGoogleTranslateScript(() => googleTranslateElementInit());
+  // Function to translate page to a specific language
+  function translatePage(targetLang) {
+    const container = document.getElementById('google_translate_container');
+    container.style.display = 'inline-block';
+
+    loadGoogleTranslateScript(function() {
+      // Google Translate uses an iframe with a select element
+      // We need to wait a short time for the select to be created
+      setTimeout(function() {
+        const select = container.querySelector('select');
+        if (select) {
+          select.value = targetLang;
+          select.dispatchEvent(new Event('change'));
+        }
+      }, 500); // 0.5s delay for widget to initialize
+    });
   }
 </script>
+
+<style>
+#google_translate_container select {
+  padding: 4px;
+  font-size: 14px;
+}
+</style>
